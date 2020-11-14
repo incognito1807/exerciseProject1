@@ -7,22 +7,22 @@
         <p id="demo"></p>
         <script type="text/javascript">
             //ham dem dung async await
-            async function countFrom(a,b){
-                return new Promise((resolve,reject)=>{
-                    var id = setInterval(()=>{
-                        document.getElementById("demo").innerHTML = a;
-                        a+=1;
-                        if(a>b){ 
-                            clearInterval(id);
-                            resolve();
-                        }
-                    },1000);
+            function resolveAfterSecond(i) {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(i);
+                    }, 1000);
                 });
             }
-            //goi ham dem, xong in ra done
-            countFrom(1,5).then(function(){
-                document.getElementById("demo").innerHTML = "done";
-            });
+
+            async function asyncCall() {
+                for(let i = 0; i < 6; i++){
+                    const result = await resolveAfterSecond(i);
+                    document.getElementById("demo").innerHTML = result;
+                }
+            }
+
+            asyncCall();
         </script>
     </body>
 </html>
